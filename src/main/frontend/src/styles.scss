@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+.layout-container {
+  .topbar {
+    .logo {
+      width: 17em;
+      height: 4em;
+      background-size: auto 4em;
+    }
+
+    .topbar-left {
+      padding: 10px 0;
+    }
+  }
+}
+
+body {
+  .ui-rating {
+    .fa-star {
+      color: #0e2031;
+    }
+  }
+}
+
+.clear-border .ui-widget-content {
+  border: none;
+}
+
+.light-footer-paginator .ui-paginator-bottom {
+  margin-right: 1em;
+  background-color: transparent;
+  border: none;
+}
+
+.light-footer-paginator .ui-paginator-bottom a {
+  color: black;
+  text-shadow: 0 0 20px black;
+}

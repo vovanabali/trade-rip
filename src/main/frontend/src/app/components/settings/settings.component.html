@@ -1,0 +1,97 @@
+<div class="ui-g">
+  <div class="ui-g-12">
+    <div class="card card-w-title">
+      <h1>Settings</h1>
+      <div class="ui-g">
+        <div class="ui-g-12">
+          <div class="ui-g-12 ui-lg-3">
+            Скидка при покупке:
+          </div>
+          <div class="ui-g-12 ui-lg-7">
+            <input type="text" [(ngModel)]="user.discountForBuy" style="width: 100%;" pInputText
+                   placeholder="Скидка не определана" readonly>
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-12 ui-lg-3">
+            Скидка при продаже:
+          </div>
+          <div class="ui-g-12 ui-lg-7">
+            <input type="text" [(ngModel)]="user.discountForSell" style="width: 100%;" pInputText
+                   placeholder="Скидка не определана" readonly>
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-12 ui-lg-3">
+            Market API Key:
+          </div>
+          <div class="ui-g-12 ui-lg-7">
+            <input type="text" [(ngModel)]="user.marketApi" style="width: 100%;" pInputText placeholder="APY Key">
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-12 ui-lg-3">
+            Trade link:
+          </div>
+          <div class="ui-g-12 ui-lg-7">
+            <input type="text" [(ngModel)]="user.tradeLink" style="width: 100%;" pInputText placeholder="Trade link">
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-12 ui-lg-3">
+            Мин. выгода в процентах:
+          </div>
+          <div class="ui-g-12 ui-lg-7">
+            <input type="text" [(ngModel)]="user.buyProfit" style="width: 100%;" pInputText placeholder="проценты">
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-12 ui-lg-3">
+            Мин. цена предмета для покупки (RUB):
+          </div>
+          <div class="ui-g-12 ui-lg-7">
+            <input type="text" [(ngModel)]="user.minItemPrice" style="width: 100%;" pInputText placeholder="цена">
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-12 ui-lg-3">
+            Последнее чтение с С5 в минутах:
+          </div>
+          <div class="ui-g-12 ui-lg-7">
+            <input type="text" [(ngModel)]="user.maxLastGetC5Price" style="width: 100%;" pInputText placeholder="Последнее чтение с С5 в минутах">
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-12 ui-lg-3">
+            Выгода в процентах при выводе с С5 на Маркет:
+          </div>
+          <div class="ui-g-12 ui-lg-7">
+            <input type="text" [(ngModel)]="user.c5ToMarket" style="width: 100%;" pInputText placeholder="Последнее чтение с С5 в минутах">
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-12 ui-lg-3">
+            Курс для С5:
+          </div>
+          <div class="ui-g-12 ui-lg-7">
+            <input type="text" [(ngModel)]="user.currentCurrency" style="width: 100%;" pInputText placeholder="Последнее чтение с С5 в минутах">
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-12 ui-lg-3">
+            Минимальная выгода в рублях:
+          </div>
+          <div class="ui-g-12 ui-lg-7">
+            <input type="text" [(ngModel)]="user.minProfit" style="width: 100%;" pInputText placeholder="Последнее чтение с С5 в минутах">
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <p-checkbox binary="true" label="В ключить сокет" [(ngModel)]="user.listen"></p-checkbox>
+        </div>
+        <div class="ui-g-12 ui-lg-10">
+          <p-button label="Сохранить" style="float: right" (onClick)="save()"></p-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<div class="ui-g">
+  <div class="ui-g-12">
+    <div class="card">
+      <div class="ui-g">
+        <div class="ui-g-12">
+          <p-button label="Загрузить с C5" style="float: left" (onClick)="loadFromC5()"></p-button>
+
+          <p-button label="Удалить" style="float: left" (onClick)="deleteAll()"></p-button>
+        </div>
+        <div class="ui-g-12 ui-lg-4">
+          <input type="text" [(ngModel)]="itemMoreAdd.name" style="width: 100%;" pInputText
+                 placeholder="Наименование">
+        </div>
+        <div class="ui-g-12 ui-lg-4">
+          <input type="text" [(ngModel)]="itemMoreAdd.ruName" style="width: 100%;" pInputText
+                 placeholder="Русское наивенование">
+        </div>
+        <div class="ui-g-12 ui-lg-2">
+          <input type="text" [(ngModel)]="itemMoreAdd.price" style="width: 100%;" pInputText
+                 placeholder="Цена">
+        </div>
+        <div class="ui-g-12 ui-lg-2">
+          <p-checkbox binary="true" label="Это предмет" [(ngModel)]="itemMoreAdd.item"></p-checkbox>
+        </div>
+        <div class="ui-g-12">
+          <p-button label="Сохранить" style="float: right" (onClick)="save()"></p-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui-g-12">
+    <div class="card">
+      <div class="ui-g">
+        <p-table #dt [paginator]="true" [rows]="10" [columns]="cols" [value]="itemMoreList" [responsive]="true" [loading]="loading">
+          <ng-template pTemplate="caption">
+            <div style="text-align: right">
+              <input #searchElement type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns">
+                {{col.header}}
+              </th>
+              <th style="width:4em"></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+              <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+              </td>
+              <td>
+                <button pButton icon="ui-icon-edit" (click)="edit(rowData)" style="margin-bottom: .5em;"></button>
+                <button class="ui-button-danger" pButton icon="ui-icon-delete" (click)="delete(rowData)"></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+
+</div>

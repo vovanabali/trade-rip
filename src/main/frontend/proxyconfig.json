@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "https://market.dota2.net",
+    "secure": false,
+    "changeOrigin": true
+  }
+}
