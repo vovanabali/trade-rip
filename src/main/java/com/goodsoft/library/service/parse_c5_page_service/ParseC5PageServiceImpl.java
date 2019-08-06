@@ -11,14 +11,26 @@ import com.goodsoft.library.service.market.MarketService;
 import com.goodsoft.library.service.settings.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpHost;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.net.Authenticator;
@@ -218,12 +230,36 @@ public class ParseC5PageServiceImpl implements ParseC5PageService {
         if (Objects.isNull(itemMore.getProxy()) || itemMore.getProxy().isEmpty()) {
             return;
         }
+
         String[] userProxy = itemMore.getProxy().split(":");
-        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(userProxy[0], Integer.parseInt(userProxy[1])));
-        String response = marketService.sendAndGetresponse(itemMore.getUrl(), proxy);
-        if (Objects.nonNull(response) && !response.isEmpty()) {
-           Document document = Jsoup.parse(response);
+        RestTemplate restTemplate = createRestTemplate("PTaq07", "ogA1CZ", userProxy[0], Integer.parseInt(userProxy[1]));
+        ResponseEntity<String> response = restTemplate.getForEntity(itemMore.getUrl(), String.class);
+        if (Objects.equals(response.getStatusCode(), HttpStatus.OK)) {
+           Document document = Jsoup.parse(response.getBody());
            Elements elements = document.getElementsByClass("img csgo-img-bg");
         }
+    }
+
+    private RestTemplate createRestTemplate(
+            String username,
+            String password,
+            String proxyUrl,
+            int port
+    ) {
+        CredentialsProvider credsProvider = new BasicCredentialsProvider();
+        credsProvider.setCredentials(
+                new AuthScope(proxyUrl, port),
+                new UsernamePasswordCredentials(username, password));
+
+        HttpHost myProxy = new HttpHost(proxyUrl, port);
+        HttpClientBuilder clientBuilder = HttpClientBuilder.create();
+
+        clientBuilder.setProxy(myProxy).setDefaultCredentialsProvider(credsProvider).disableCookieManagement();
+
+        HttpClient httpClient = clientBuilder.build();
+        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+        factory.setHttpClient(httpClient);
+
+        return new RestTemplate(factory);
     }
 }

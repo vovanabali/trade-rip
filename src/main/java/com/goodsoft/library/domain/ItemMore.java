@@ -3,6 +3,7 @@ package com.goodsoft.library.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -51,6 +52,7 @@ public class ItemMore {
 
     private String proxy;
 
+    @Nullable
     private double c5price;
 
     private String url;
