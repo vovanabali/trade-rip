@@ -12,4 +12,6 @@ public interface BlackItemRepository extends PagingAndSortingRepository<BlackIte
     BlackItem findFirstByName(String name);
 
     boolean existsByName(String name);
+
+    List<BlackItem> findAllByNameIsNotNull();
 }

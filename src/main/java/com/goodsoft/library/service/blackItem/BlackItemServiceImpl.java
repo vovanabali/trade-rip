@@ -22,7 +22,7 @@ public class BlackItemServiceImpl implements BlackItemService {
 
     @Override
     public List<BlackItem> getAll() {
-        return blackItemRepository.findAll();
+        return blackItemRepository.findAllByNameIsNotNull();
     }
 
     @Override

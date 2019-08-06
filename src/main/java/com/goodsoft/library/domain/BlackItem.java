@@ -21,4 +21,6 @@ public class BlackItem {
      * Item name
      */
     private String name;
+
+    private String url;
 }

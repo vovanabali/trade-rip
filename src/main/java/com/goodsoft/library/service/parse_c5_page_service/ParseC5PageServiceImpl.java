@@ -7,6 +7,7 @@ import com.goodsoft.library.enums.ItemPriceType;
 import com.goodsoft.library.enums.ItemSiteType;
 import com.goodsoft.library.service.item.ItemService;
 import com.goodsoft.library.service.itemMore.ItemMoreService;
+import com.goodsoft.library.service.market.MarketService;
 import com.goodsoft.library.service.settings.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,10 +16,17 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
+import java.net.Authenticator;
+import java.net.InetSocketAddress;
+import java.net.PasswordAuthentication;
+import java.net.Proxy;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -31,6 +39,7 @@ public class ParseC5PageServiceImpl implements ParseC5PageService {
 
     private final ItemService itemService;
     private final UserService userService;
+    private final MarketService marketService;
     private Settings settings;
 
     @Autowired
@@ -77,11 +86,11 @@ public class ParseC5PageServiceImpl implements ParseC5PageService {
         if (Objects.nonNull(element)) {
             Elements last = element.getElementsByClass("last");
             if (!last.isEmpty()) {
-               Elements a = last.get(0).getElementsByTag("a");
-               if (!a.isEmpty()) {
-                  String href = a.get(0).attr("href");
-                   pagesCount = Integer.valueOf(href.split("page=")[1]);
-               }
+                Elements a = last.get(0).getElementsByTag("a");
+                if (!a.isEmpty()) {
+                    String href = a.get(0).attr("href");
+                    pagesCount = Integer.parseInt(href.split("page=")[1]);
+                }
             }
         }
         return pagesCount;
@@ -173,7 +182,7 @@ public class ParseC5PageServiceImpl implements ParseC5PageService {
         item.setMarketHashName(elementText[0].replace(" Purchase", ""));
         item.setItemSiteType(ItemSiteType.C5);
         item.setLastDateUpdate(new Date());
-        item.setPrice(Double.valueOf(elementText[1].split(" ")[0]) * settings.getCurrentCurrency());
+        item.setPrice(Double.parseDouble(elementText[1].split(" ")[0]) * settings.getCurrentCurrency());
         if (element.text().contains("on selling")) {
             item.setPriceType(ItemPriceType.BUY);
         } else {
@@ -197,6 +206,24 @@ public class ParseC5PageServiceImpl implements ParseC5PageService {
             if (pagesCount > 0) {
                 loadC5PageGem(1, pagesCount, "ethereal");
             }
+        }
+    }
+
+    @Override
+    public void checkC5Pages() {
+        itemMoreService.getAlItems().parallelStream().forEach(itemMore -> new Thread(() -> loadEndParseC5Item(itemMore)).start());
+    }
+
+    private void loadEndParseC5Item(ItemMore itemMore) {
+        if (Objects.isNull(itemMore.getProxy()) || itemMore.getProxy().isEmpty()) {
+            return;
+        }
+        String[] userProxy = itemMore.getProxy().split(":");
+        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(userProxy[0], Integer.parseInt(userProxy[1])));
+        String response = marketService.sendAndGetresponse(itemMore.getUrl(), proxy);
+        if (Objects.nonNull(response) && !response.isEmpty()) {
+           Document document = Jsoup.parse(response);
+           Elements elements = document.getElementsByClass("img csgo-img-bg");
         }
     }
 }

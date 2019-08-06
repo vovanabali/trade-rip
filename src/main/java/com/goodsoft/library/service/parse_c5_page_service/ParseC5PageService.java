@@ -10,4 +10,6 @@ public interface ParseC5PageService {
     boolean loadEndParseC5Pages() throws IOException, InterruptedException;
 
     void loadGems() throws IOException, InterruptedException;
+
+    void checkC5Pages();
 }

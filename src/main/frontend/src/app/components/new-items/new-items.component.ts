@@ -163,4 +163,12 @@ export class NewItemsComponent implements OnInit, OnDestroy {
       this.ws.close();
     }
   }
+
+  checkC5Pages() {
+    this.mainService.checkC5Pages().subscribe(() => {
+      console.log("hui");
+    }, (err) => {
+      console.log("err");
+    });
+  }
 }

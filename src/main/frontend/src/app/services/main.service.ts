@@ -10,4 +10,8 @@ export class MainService {
   private url = "http://localhost:9100/main";
 
   constructor(private http: HttpClient) { }
+
+  checkC5Pages(): Observable<any> {
+    return this.http.get(this.url + "/check-c5-pages");
+  }
 }

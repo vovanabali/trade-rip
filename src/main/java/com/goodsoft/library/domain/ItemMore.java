@@ -49,6 +49,12 @@ public class ItemMore {
 
     private boolean wasBuy = true;
 
+    private String proxy;
+
+    private double c5price;
+
+    private String url;
+
     public ItemMore(Item item) {
         setItem(false);
         setName(item.getMarketHashName().replace("Prismatic: ", "").replace("Ethereal: ", ""));

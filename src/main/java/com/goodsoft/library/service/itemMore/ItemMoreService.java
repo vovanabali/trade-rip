@@ -16,6 +16,8 @@ public interface ItemMoreService {
 
     List<ItemMore> getAllNoItems();
 
+    List<ItemMore> getAlItems();
+
     List<ItemMore> loadFromC5() throws IOException, InterruptedException;
 
     void updateWasBuy();

@@ -7,17 +7,26 @@
 
           <p-button label="Удалить" style="float: left" (onClick)="deleteAll()"></p-button>
         </div>
-        <div class="ui-g-12 ui-lg-4">
+        <div class="ui-g-12 ui-lg-2">
           <input type="text" [(ngModel)]="itemMoreAdd.name" style="width: 100%;" pInputText
                  placeholder="Наименование">
         </div>
-        <div class="ui-g-12 ui-lg-4">
+        <div class="ui-g-12 ui-lg-2">
           <input type="text" [(ngModel)]="itemMoreAdd.ruName" style="width: 100%;" pInputText
                  placeholder="Русское наивенование">
         </div>
         <div class="ui-g-12 ui-lg-2">
           <input type="text" [(ngModel)]="itemMoreAdd.price" style="width: 100%;" pInputText
                  placeholder="Цена">
+        </div>
+        <div class="ui-g-12 ui-lg-2">
+          <input pInputText type="text" placeholder="Цена по C5" style="width: 100%;" [(ngModel)]="itemMoreAdd.c5price"/>
+        </div>
+        <div class="ui-g-12 ui-lg-2">
+          <input pInputText type="text" placeholder="Прокси" style="width: 100%;" [(ngModel)]="itemMoreAdd.proxy"/>
+        </div>
+        <div class="ui-g-12 ui-lg-2">
+          <input pInputText type="text" placeholder="C5 URL" style="width: 100%;" [(ngModel)]="itemMoreAdd.url"/>
         </div>
         <div class="ui-g-12 ui-lg-2">
           <p-checkbox binary="true" label="Это предмет" [(ngModel)]="itemMoreAdd.item"></p-checkbox>
@@ -35,7 +44,8 @@
         <p-table #dt [paginator]="true" [rows]="10" [columns]="cols" [value]="itemMoreList" [responsive]="true" [loading]="loading">
           <ng-template pTemplate="caption">
             <div style="text-align: right">
-              <input #searchElement type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+              <input #searchElement type="text" pInputText size="50" placeholder="Global Filter"
+                     (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
             </div>
           </ng-template>
           <ng-template pTemplate="header" let-columns>

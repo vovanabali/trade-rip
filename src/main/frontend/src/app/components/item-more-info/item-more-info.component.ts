@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ItemMore} from "../../domains/ItemMore";
 import {ItemMoreService} from "../../services/itemMore.service";
+import {MainService} from "../../services/main.service";
 
 @Component({
   selector: 'app-item-more-info',
@@ -20,7 +21,9 @@ export class ItemMoreInfoComponent implements OnInit {
       {field: 'name', header: 'Наименование'},
       {field: 'ruName', header: 'Русское наименование'},
       {field: 'price', header: 'Цена'},
-      {field: 'item', header: 'Это предмет'}
+      {field: 'item', header: 'Это предмет'},
+      {field: 'c5price', header: 'Цена C5'},
+      {field: 'proxy', header: 'Прокси для поиска'}
     ];
   }
 

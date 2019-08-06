@@ -47,6 +47,11 @@ public class ItemMoreServiceImpl implements ItemMoreService {
     }
 
     @Override
+    public List<ItemMore> getAlItems() {
+        return itemMoreRepository.findAllByIsItem(Boolean.TRUE);
+    }
+
+    @Override
     public List<ItemMore> loadFromC5() throws IOException, InterruptedException {
         parseC5PageService.loadGems();
         return getAll();

@@ -6,4 +6,7 @@ export class ItemMore {
   ruName: string;
   createdSystem = true;
   wasBuy = true;
+  proxy: number;
+  c5price: number;
+  url:string;
 }
